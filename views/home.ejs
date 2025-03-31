@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+  <title>Home Page</title>
+  <style>
+    .blog-card {
+      height: 400px; /* Fixed height */
+      width: 100%; /* Ensures uniform width */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s ease-in-out;
+    }
+    .blog-card:hover {
+      transform: scale(1.02);
+    }
+    .blog-image {
+      width: 100%;
+      height: 180px; /* Fixed height for consistency */
+      object-fit: cover;
+    }
+    .blog-content {
+      padding: 15px;
+      flex-grow: 1;
+    }
+    .blog-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .blog-text {
+      font-size: 14px;
+      color: #555;
+      display: -webkit-box;  /* Enables truncation */
+      -webkit-line-clamp: 3; /* Limits to 3 lines */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+
+      /* Standard property (for future support) */
+      line-clamp: 3;
+    }
+    .read-more {
+      text-align: center;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: #f8f9fa;
+    }
+  </style>
+</head>
+<body>
+  <%- include('./partials/nav') %>
+
+  <div class="container mt-4">
+    <h1 class="text-center mb-4">Latest Blogs</h1>
+
+    <div class="row">
+      <% blogs.forEach(blog => { %>
+        <div class="col-md-4 mb-4">
+          <div class="blog-card">
+            <% if (blog.coverImageURL) { %>
+              <img src="<%= blog.coverImageURL %>" alt="Blog Image" class="blog-image">
+            <% } %>
+            
+            <div class="blog-content">
+              <h3 class="blog-title"><%= blog.title %></h3>
+              <p class="blog-text"><%= blog.body.substring(0, 100) %>...</p>
+            </div>
+
+            <div class="read-more">
+              <a href="/blog/<%= blog._id %>" class="btn btn-primary btn-sm">Read More →</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <%- include('./partials/script') %>
+</body>
+</html>
